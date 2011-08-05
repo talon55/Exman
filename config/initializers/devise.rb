@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "do-not-reply@exman.heroku.com"
+  config.mailer_sender = "do-not-reply@exman.herokuapp.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -185,11 +185,11 @@ Devise.setup do |config|
   # config.navigational_formats = [:"*/*", "*/*", :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  if Rails.env.production?
-    config.sign_out_via = :delete
-  else
+  #unless Rails.env.test?
+    #config.sign_out_via = :delete
+  #else
     config.sign_out_via = :get
-  end
+  #end
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

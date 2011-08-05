@@ -50,7 +50,7 @@ ExpenseManager::Application.configure do
   config.active_support.deprecation = :notify
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'exman.heroku.com' }
+  config.action_mailer.default_url_options = { :host => 'exman.herokuapp.com' }
 
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
