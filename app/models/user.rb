@@ -8,6 +8,7 @@ class User
   field :first_name
   field :last_name
   field :user_name
+  field :email
   validates_presence_of :first_name, :last_name, :user_name
   validates_uniqueness_of :user_name, :email, :case_sensitive => false
   attr_accessible(:user_name, :email, :password, :password_confirmation,

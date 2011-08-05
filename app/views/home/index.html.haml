@@ -1,2 +1,15 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.haml
+%h1 Expense Manager Homepage!
+
+%p
+  Welcome to my new app! This is only a placeholder for now but I'll be adding
+  new functionality soon!
+
+
+%h3 This is a list of all the users currently signed up:
+
+- num = 0
+- @users.each do |user|
+  %p
+    #{num +=1}.
+    = link_to "#{user.first_name} #{user.last_name}", user
+

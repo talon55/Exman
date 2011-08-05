@@ -5,16 +5,17 @@
 
   %p
     = f.label :first_name
+    %i (Please use your real name!)
     %br/
-    = f.email_field :first_name
-    %p
+    = f.text_field :first_name
+  %p
     = f.label :last_name
     %br/
-    = f.email_field :last_name
+    = f.text_field :last_name
   %p
     = f.label :user_name
     %br/
-    = f.email_field :user_name
+    = f.text_field :user_name
   %p
     = f.label :email
     %br/
@@ -29,5 +30,5 @@
     = f.password_field :password_confirmation
   %p= f.submit "Sign up"
 
-= render :partial => "devise/shared/links"
+= render "devise/shared/links"
 

@@ -1,0 +1,7 @@
+%h1 #{getFullName(@user)}'s Profile
+
+- if @user.id == current_user._id
+  %div This is you!
+  - if getFullName(@user) == "Jenny Jean"
+    %p= "I love you! -Eric"
+
