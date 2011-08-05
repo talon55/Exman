@@ -15,6 +15,7 @@ end
 
 group :development do
   gem "rspec-rails"
+    gem "wirble"
 end
 
 group :test do

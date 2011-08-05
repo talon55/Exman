@@ -14,3 +14,7 @@ user = User.create!(first_name: 'First', last_name: 'User', user_name: 'first_us
                     email: 'user@test.com', password: 'please', password_confirmation: 'please')
 puts 'New user created: ' << user.user_name
 
+group = user.groups.create!(name: 'First Group')
+puts 'New group created: ' << group.name
+puts group.id
+
