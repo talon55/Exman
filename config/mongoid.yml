@@ -1,6 +1,7 @@
 development:
   host: localhost
   database: expense_manager_development
+  preload_models: true
 
 test:
   host: localhost
