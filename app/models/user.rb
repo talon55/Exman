@@ -13,5 +13,7 @@ class User
   validates_uniqueness_of :user_name, :email, :case_sensitive => false
   attr_accessible(:user_name, :email, :password, :password_confirmation,
                   :remember_me, :first_name, :last_name)
+
+  has_and_belongs_to_many :groups
 end
 
