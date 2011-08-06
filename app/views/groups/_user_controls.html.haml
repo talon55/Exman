@@ -1,0 +1,5 @@
+- if !isMember? current_user, @group
+  = link_to "Join this Group!", group_path(id: params[:id], join: true), method: :put
+- elsif (isAdmin?(current_user, @group) || isOwner?(current_user, @group))
+  =link_to "Edit this Group", edit_group_path
+

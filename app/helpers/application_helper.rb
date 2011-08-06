@@ -20,6 +20,10 @@ module ApplicationHelper
     group.admin_ids.include?(user.id)
   end
 
+  def isMember? user, group
+    user.in? group.users
+  end
+
   def greeting user
     unless user.blank?
       "Hello, #{getFullName(current_user)}!"
