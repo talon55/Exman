@@ -20,12 +20,16 @@ class GroupsController < ApplicationController
     redirect_to group
   end
 
-  #def_
-
   def edit
+
   end
 
   def update
+    group = Group.find(params[:id])
+    if params[:join]
+      group.users << current_user
+    end
+    redirect_to group
   end
 
   def destroy

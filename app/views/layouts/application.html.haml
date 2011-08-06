@@ -6,11 +6,12 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
+    = greeting current_user
     %ul.hmenu
-      = link_to "Home", root_path
       = render 'devise/menu/registration_items'
       = render 'devise/menu/login_items'
     %ul.hmenu
+      = link_to "Home", root_path
       =link_to "Groups", groups_path
 
     - flash.each do |name, msg|
