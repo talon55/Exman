@@ -1,2 +1,20 @@
-%h1 Groups#show
-%p Find me in app/views/groups/show.html.haml
+%h1 #{@group.name} Main Page
+
+%h4 This group's owner is #{userLink(@group.owner)}
+
+%div
+  The group administrators are:
+  - num = 0
+  - @group.admins.each do |admin|
+    %p
+      #{num += 1}.
+      = userLink admin
+
+%div
+  The group members are:
+  - num = 0
+  - @group.users.each do |user|
+    %p
+      #{num += 1}.
+      = userLink user
+

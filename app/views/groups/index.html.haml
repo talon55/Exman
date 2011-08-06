@@ -1,2 +1,10 @@
-%h1 Groups#index
-%p Find me in app/views/groups/index.html.haml
+%h1 Groups Homepage
+
+%h3 This is a list of all current groups
+
+- num = 0
+- @groups.each do |group|
+  %p
+    #{num +=1}.
+    = link_to group.name, group
+

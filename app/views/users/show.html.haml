@@ -5,3 +5,15 @@
   - if getFullName(@user) == "Jenny Jean"
     %p= "I love you! -Eric"
 
+%h3 #{@user.first_name.capitalize} is a member of these groups:
+
+-num = 0
+- @user.groups.each do |group|
+  %p
+    #{num += 1}.
+    = link_to group.name, group
+    - if isOwner?(@user, group)
+      (Owner)
+    - elsif isAdmin?(@user, group)
+      (Admin)
+
