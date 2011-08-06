@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def isAdmin? user, group
-    group.admin.include?(user.id)
+    group.admin_ids.include?(user.id)
   end
 end
 

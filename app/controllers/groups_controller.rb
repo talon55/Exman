@@ -10,5 +10,26 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def new
+    @group = Group.new
+  end
+
+  def create
+    user = current_user
+    group = user.groups.create!(params[:group].merge({owner_id: user.id, admin_ids: [user.id]}))
+    redirect_to group
+  end
+
+  #def_
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
 end
 
