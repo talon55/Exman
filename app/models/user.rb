@@ -12,13 +12,14 @@ class User
   validates_presence_of :first_name, :last_name, :user_name
   validates_uniqueness_of :user_name, :email, :case_sensitive => false
   attr_accessible(:user_name, :email, :password, :password_confirmation,
-                  :remember_me, :first_name, :last_name, :group_ids)
+                  :remember_me, :first_name, :last_name)
 
-  def remove_group id
-    puts self.group_ids.class
-    puts self.group_ids
+  def remove_group id, continue = true
     self.group_ids.delete id
     self.save
+    if continue
+      Group.find(id).remove_user self.id, false
+    end
   end
 
   has_and_belongs_to_many :groups

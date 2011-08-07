@@ -28,24 +28,24 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     if params[:join]
       group.users << current_user
-    else
+    elsif params[:leave]
 
+    else
+      group.attributes = params[:group]
+      group.save
     end
     redirect_to group
   end
 
   def destroy
-    logger.debug("\n#{current_user.groups.to_a}\n")
-    group = Group.find(params[:id])
-    #group.users.each do |user|
-    #  user.groups.delete_all(conditions: {_id: group.id})
-    #end
-    logger.debug("\n#{group.to_a}\n")
-    group.destroy
-    group.save
-    logger.debug("\n#{group.to_a}\n")
-    logger.debug("\n#{current_user.groups.to_a}\n")
+    Group.find(params[:id]).destroy
     redirect_to root_path
+  end
+
+  private
+
+  def leave_group
+
   end
 
 end

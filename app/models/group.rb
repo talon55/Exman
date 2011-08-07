@@ -5,15 +5,22 @@ class Group
   field :admin_ids, type: Array
   validates_presence_of :name
   #validates_uniqueness_of :name, case_sensitive: false
-  attr_accessible :name, :owner_id, :admin_ids, :user_ids
+  attr_accessible :name, :owner_id, :admin_ids
 
   after_destroy do
     self.users.each do |user|
       if user.group_ids.include? self.id
-        puts "test"
         user.remove_group self.id
         user.save
       end
+    end
+  end
+
+  def remove_user id, continue = true
+    self.user_ids.delete id
+    self.save
+    if continue
+      User.find(id).remove_group self.id, false
     end
   end
 

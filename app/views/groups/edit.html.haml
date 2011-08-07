@@ -1,6 +1,12 @@
 %h2 Edit #{@group.name}
 
--#= form_for(@group, as: :group, url: {action: "update"}) do |f|
+= form_for(@group, as: :group, url: {action: "update"}) do |f|
+
+  %p
+    =f.label :name
+    %br/
+    =f.text_field :name
+  %p= f.submit "Update"
 
 -if isOwner? current_user, @group
   %p Unhappy? #{link_to "Delete this Group", group_path, :confirm => "Are you sure?", :method => :delete}.
