@@ -8,7 +8,7 @@
     =f.text_field :name
   %p= f.submit "Update"
 
--if isOwner? current_user, @group
+-if current_user.isOwner? @group
   %p Unhappy? #{link_to "Delete this Group", group_path, :confirm => "Are you sure?", :method => :delete}.
 = link_to "Back", :back
 

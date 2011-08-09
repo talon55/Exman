@@ -12,9 +12,9 @@
   %p
     #{num += 1}.
     = link_to group.name, group
-    - if isOwner?(@user, group)
+    - if @user.isOwner? group
       (Owner)
-    - elsif isAdmin?(@user, group)
+    - elsif @user.isAdmin? group
       (Admin)
 
 %p= link_to "Create a new Group!", new_group_path

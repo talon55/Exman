@@ -12,18 +12,6 @@ module ApplicationHelper
     link_to getFullName(user), user
   end
 
-  def isOwner? user, group
-    user.id == group.owner.id
-  end
-
-  def isAdmin? user, group
-    group.admin_ids.include?(user.id)
-  end
-
-  def isMember? user, group
-    user.in? group.users
-  end
-
   def greeting user
     unless user.blank?
       "Hello, #{getFullName(current_user)}!"

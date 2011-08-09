@@ -16,6 +16,12 @@ class Group
     end
   end
 
+  def isSafeToLeave? user
+
+
+  end
+
+
   def remove_user id, continue = true
     self.user_ids.delete id
     self.save

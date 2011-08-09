@@ -22,6 +22,18 @@ class User
     end
   end
 
+  def isOwner? group
+    self.id == group.owner.id
+  end
+
+  def isAdmin? group
+    group.admin_ids.include? self.id
+  end
+
+  def isMember? group
+    self.in? group.users
+  end
+
   has_and_belongs_to_many :groups
 end
 
