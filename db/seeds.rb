@@ -17,8 +17,11 @@ puts 'New user created: ' << user.user_name
 group = user.groups.create!(name: 'First Group', owner_id: user.id, admin_ids: [user.id])
 puts 'New group created: ' << group.name
 
-user2 =User.create!(first_name: 'Second', last_name: 'User', user_name: 'second_user',
-                    email: 'user2@test.com', password: 'please', password_confirmation: 'please')
+user2 = User.create!(first_name: 'Second', last_name: 'User', user_name: 'second_user',
+                     email: 'user2@test.com', password: 'please', password_confirmation: 'please')
+user3 = User.create!(first_name: 'Third', last_name: 'User', user_name: 'third_user',
+                     email: 'user3@test.com', password: 'please', password_confirmation: 'please')
 
 group.users << user2
+group.users << user3
 

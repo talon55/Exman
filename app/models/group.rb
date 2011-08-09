@@ -23,7 +23,7 @@ class Group
     self.user_ids.delete user.id
     self.save
     if continue
-      user.remove_group self.id, false
+      user.remove_group self, false
     end
   end
 

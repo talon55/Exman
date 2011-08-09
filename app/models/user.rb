@@ -18,7 +18,7 @@ class User
     self.group_ids.delete group.id
     self.save
     if continue
-      group.remove_user self.id, false
+      group.remove_user self, false
     end
   end
 
