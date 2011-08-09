@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
     if params[:join]
       group.users << current_user
     elsif params[:leave]
-
+      leave_group group
     else
       group.attributes = params[:group]
       group.save
@@ -44,8 +44,11 @@ class GroupsController < ApplicationController
 
   private
 
-  def leave_group
-
+  def leave_group group
+    if group.isSafeToLeave? current_user
+      current_user.remove_group group
+    else
+    end
   end
 
 end

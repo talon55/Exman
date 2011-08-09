@@ -10,23 +10,20 @@ class Group
   after_destroy do
     self.users.each do |user|
       if user.group_ids.include? self.id
-        user.remove_group self.id
-        user.save
+        user.remove_group self, false
       end
     end
   end
 
   def isSafeToLeave? user
-
-
+    !user.isOwner? self
   end
 
-
-  def remove_user id, continue = true
-    self.user_ids.delete id
+  def remove_user user, continue = true
+    self.user_ids.delete user.id
     self.save
     if continue
-      User.find(id).remove_group self.id, false
+      user.remove_group self.id, false
     end
   end
 

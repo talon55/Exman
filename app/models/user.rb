@@ -14,11 +14,11 @@ class User
   attr_accessible(:user_name, :email, :password, :password_confirmation,
                   :remember_me, :first_name, :last_name)
 
-  def remove_group id, continue = true
-    self.group_ids.delete id
+  def remove_group group, continue = true
+    self.group_ids.delete group.id
     self.save
     if continue
-      Group.find(id).remove_user self.id, false
+      group.remove_user self.id, false
     end
   end
 
