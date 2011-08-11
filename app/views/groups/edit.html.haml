@@ -6,6 +6,10 @@
     =f.label :name
     %br/
     =f.text_field :name
+
+  %p
+    =f.select :owner_id, @memberSelect
+
   %p= f.submit "Update"
 
 -if current_user.isOwner? @group

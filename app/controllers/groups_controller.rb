@@ -22,6 +22,8 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.find(params[:id])
+    @memberSelect = []
+    #@memberSelect = [[getFullName(@group.owner), @group.owner.id]]
   end
 
   def update
@@ -48,8 +50,11 @@ class GroupsController < ApplicationController
     if group.isSafeToLeave? current_user
       current_user.remove_group group
     else
+      flash[:alert] = I18n.t("group.failure.is_owner")
     end
   end
+
+
 
 end
 
