@@ -7,4 +7,6 @@ en:
   group:
     failure:
       is_owner: 'You cannot leave a group that you own. Give ownership to someone else or destroy the group.'
+    edit:
+      owner: 'Group owner changed!'
 

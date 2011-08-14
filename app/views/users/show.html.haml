@@ -1,8 +1,8 @@
-%h1 #{getFullName(@user)}'s Profile
+%h1 #{@user.getFullName}'s Profile
 
-- if @user.id == current_user._id
+- if @user.id == current_user.id
   %div This is you!
-  - if getFullName(@user) == "Jenny Jean"
+  - if @user.getFullName == "Jenny Jean"
     %p= "I love you! -Eric"
 
 %h3 #{@user.first_name.capitalize} is a member of these groups:

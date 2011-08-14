@@ -34,6 +34,10 @@ class User
     self.in? group.users
   end
 
+  def getFullName
+    "#{self.first_name.capitalize} #{self.last_name.capitalize}"
+  end
+
   has_and_belongs_to_many :groups
 end
 

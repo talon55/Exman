@@ -22,8 +22,13 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.find(params[:id])
-    @memberSelect = []
-    #@memberSelect = [[getFullName(@group.owner), @group.owner.id]]
+
+    @memberSelect = [[@group.owner.getFullName, @group.owner.id]]
+    @group.users.each do |user|
+      unless @group.owner == user
+        @memberSelect.push ([user.getFullName, user.id])
+      end
+    end
   end
 
   def update
@@ -33,8 +38,8 @@ class GroupsController < ApplicationController
     elsif params[:leave]
       leave_group group
     else
-      group.attributes = params[:group]
-      group.save
+      update_group group, params[:group]
+
     end
     redirect_to group
   end
@@ -54,7 +59,17 @@ class GroupsController < ApplicationController
     end
   end
 
+  def update_group group, new_data
+      unless params[:own_ok] == "1"
+        new_data.delete :owner_id
+      else
+        flash[:notice] = I18n.t "group.edit.owner"
 
+      end
+
+      group.attributes = new_data
+      group.save
+  end
 
 end
 

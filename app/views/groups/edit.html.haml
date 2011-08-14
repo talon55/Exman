@@ -7,8 +7,11 @@
     %br/
     =f.text_field :name
 
-  %p
-    =f.select :owner_id, @memberSelect
+  - if current_user.isOwner? @group
+    %p
+      =f.select :owner_id, @memberSelect
+      =check_box_tag :own_ok
+      =label_tag :own_ok, "Click to Confirm change of owner."
 
   %p= f.submit "Update"
 

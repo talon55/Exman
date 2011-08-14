@@ -1,20 +1,20 @@
 module ApplicationHelper
 
-  def getFullName user
-    unless user.blank?
-      "#{user.first_name.capitalize} #{user.last_name.capitalize}"
-    else
-      nil
-    end
-  end
+  #def getFullName user
+  #  unless user.blank?
+  #    user.getFullName
+  #  else
+  #    nil
+  #  end
+  #end
 
   def userLink user
-    link_to getFullName(user), user
+    link_to user.getFullName, user
   end
 
   def greeting user
     unless user.blank?
-      "Hello, #{getFullName(current_user)}!"
+      "Hello, #{current_user.getFullName}!"
     else
       "Hello!"
     end
