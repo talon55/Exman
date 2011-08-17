@@ -23,11 +23,17 @@ class GroupsController < ApplicationController
   def edit
     @group = Group.find(params[:id])
 
-    @memberSelect = [[@group.owner.getFullName, @group.owner.id]]
-    @group.users.each do |user|
-      unless @group.owner == user
-        @memberSelect.push ([user.getFullName, user.id])
+    if (current_user.isOwner?(@group) || current_user.isAdmin?(@group))
+      @ownerSelect = [[@group.owner.getFullName, @group.owner.id]]
+      @group.users.each do |user|
+         @ownerSelect.push ([user.getFullName, user.id])
       end
+      @ownerSelect.uniq!
+
+      @adminSelect = []
+    else
+      flash[:alert] = I18n.t "group.failure.edit"
+      redirect_to @group
     end
   end
 
@@ -37,15 +43,21 @@ class GroupsController < ApplicationController
       group.users << current_user
     elsif params[:leave]
       leave_group group
-    else
+    elsif current_user.isAdmin? group
       update_group group, params[:group]
-
+    else
+      flash[:alert] = I18n.t "group.failure.edit"
     end
     redirect_to group
   end
 
   def destroy
-    Group.find(params[:id]).destroy
+    group = Group.find(params[:id])
+    if current_user.isOwner? group
+      group.destroy
+    else
+      flash[:alert] = I18n.t "group.failure.destroy"
+    end
     redirect_to root_path
   end
 
@@ -60,15 +72,18 @@ class GroupsController < ApplicationController
   end
 
   def update_group group, new_data
-      unless params[:own_ok] == "1"
-        new_data.delete :owner_id
-      else
-        flash[:notice] = I18n.t "group.edit.owner"
-
-      end
-
-      group.attributes = new_data
-      group.save
+    note = nil
+    unless (params[:own_ok] == "1") && current_user.isOwner?(group)
+      new_data.delete :owner_id
+    else
+      user = User.find new_data[:owner_id]
+      group.admin_ids.push(user.id).uniq!
+      note = "owner"
+    end
+    group.attributes = new_data
+    group.save
+    note ||= "success"
+    flash[:notice] = I18n.t "group.edit.#{note}"
   end
 
 end

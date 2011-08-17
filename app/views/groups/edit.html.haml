@@ -1,5 +1,6 @@
 %h2 Edit #{@group.name}
 
+
 = form_for(@group, as: :group, url: {action: "update"}) do |f|
 
   %p
@@ -9,13 +10,20 @@
 
   - if current_user.isOwner? @group
     %p
-      =f.select :owner_id, @memberSelect
+      =f.label :owner
+      %br/
+      =f.select :owner_id, @ownerSelect
       =check_box_tag :own_ok
       =label_tag :own_ok, "Click to Confirm change of owner."
+
+    #admin_edit
+      %h4 Edit Administrator Roles
+      %br/
 
   %p= f.submit "Update"
 
 -if current_user.isOwner? @group
   %p Unhappy? #{link_to "Delete this Group", group_path, :confirm => "Are you sure?", :method => :delete}.
+
 = link_to "Back", :back
 

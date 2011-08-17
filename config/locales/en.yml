@@ -7,6 +7,9 @@ en:
   group:
     failure:
       is_owner: 'You cannot leave a group that you own. Give ownership to someone else or destroy the group.'
+      edit: 'You must be an admin to edit the group.'
+      destroy: 'You must be the owner of a group to delete it.'
     edit:
       owner: 'Group owner changed!'
+      success: 'Group successfully edited!'
 
