@@ -2,13 +2,9 @@
 
 %h4 This group's owner is #{userLink(@group.owner)}
 
-%div
-  The group administrators are:
-  - num = 0
-  - @group.admins.each do |admin|
-    %p
-      #{num += 1}.
-      = userLink admin
+= render "admins"
+
+%br/
 
 %div
   The group members are:

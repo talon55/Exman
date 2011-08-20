@@ -1,39 +1,8 @@
 %h2 Edit #{@group.name}
 
-
-= form_for(@group, as: :group, url: {action: "update"}) do |f|
-
-  %p
-    =f.label :name
-    %br/
-    =f.text_field :name
-
-  - if current_user.isOwner? @group
-    %p
-      =f.label :owner
-      %br/
-      =f.select :owner_id, @ownerSelect
-      =check_box_tag :own_ok
-      =label_tag :own_ok, "Click to confirm change of owner."
-
-    #admin_edit
-      %h4 Edit Administrator Roles
-      %br/
-      %table
-        %tr
-          %th User
-          %th Admin?
-
-        - for user in @adminSelect
-          %tr
-            %td= user.getFullName
-            %td= f.check_box 'admin_ids', {name: 'group[admin_ids][]'}, user.id
-      %br/
-      =check_box_tag :adm_ok
-      =label_tag :adm_ok, "Click to confirm change of admins"
-
-  %p= f.submit "Update"
-
+= semantic_form_for(@group, as: :group, url: {action: "update"}) do |f|
+  = render "form", group: @group, f: f
+  %p= f.buttons
 
 -if current_user.isOwner? @group
   %p Unhappy? #{link_to "Delete this Group", group_path, :confirm => "Are you sure?", :method => :delete}.

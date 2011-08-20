@@ -51,36 +51,49 @@ class Group
     case users
     when User
       self.admin_ids = [users.id]
-    when String, BSON::ObjectId
+    when BSON::ObjectId
       self.admin_ids = [User.find(users).id]
+    when String
+      self.admin_ids = [User.find(users).id] if BSON::ObjectId.legal? users
     when Array
       self.admin_ids = []
       users.each do |user|
-        self.pushAdmins user, false
+        self.pushAdmins user
       end
     end
-
-    self.save
   end
 
   # This method and admins= are left deliberately inefficient to facilitate
   # checking that every user passed into admin_ids is a valid user. It is also
   # expected that setting the admin array is something that will be done
   # infrequently and with a relatively small array
-  def pushAdmins users, persist = true
+  def pushAdmins users
     case users
     when User
       self.admin_ids << users.id
-    when String, BSON::ObjectId
+    when BSON::ObjectId
       self.admin_ids << User.find(users).id
+    when String
+      self.admin_ids << User.find(users).id if BSON::ObjectId.legal? users
     when Array
       users.each do |user|
-        self.pushAdmins user, false
+        self.pushAdmins user
       end
     end
+  end
 
-    if persist
-      self.save
+  def removeAdmins users
+    case users
+    when User
+      self.admin_ids.delete users.id
+    when BSON::ObjectId
+      self.admin_ids.delete User.find(users).id
+    when String
+      self.admin_ids.delete User.find(users).id if BSON::ObjectId.legal? users
+    when Array
+      users.each do |user|
+        self.removeAdmins user
+      end
     end
   end
 
