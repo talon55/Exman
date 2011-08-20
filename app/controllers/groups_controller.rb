@@ -16,7 +16,7 @@ class GroupsController < ApplicationController
 
   def create
     user = current_user
-    group = user.groups.create!(params[:group].merge({owner_id: user.id, admin_ids: [user.id]}))
+    group = user.groups.create!(params[:group].merge({owner_id: user.id}))
     redirect_to group
   end
 
@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
       end
       @ownerSelect.uniq!
 
-      @adminSelect = []
+      @adminSelect = (@group.users - [@group.owner]).reverse!#.sort! {|a,b| }
     else
       flash[:alert] = I18n.t "group.failure.edit"
       redirect_to @group
@@ -73,14 +73,28 @@ class GroupsController < ApplicationController
 
   def update_group group, new_data
     note = nil
-    unless (params[:own_ok] == "1") && current_user.isOwner?(group)
-      new_data.delete :owner_id
-    else
-      user = User.find new_data[:owner_id]
-      group.admin_ids.push(user.id).uniq!
+    # logger.debug new_data[:admin_ids].class is an Array
+
+    group.name = new_data[:name] unless new_data[:name].blank?
+
+    if params[:own_ok] == "1" && current_user.isOwner?(group)
+      group.owner = new_data[:owner_id]
       note = "owner"
     end
-    group.attributes = new_data
+
+    if current_user.isOwner?(group) && params[:adm_ok] == "1"
+      group.admins = new_data[:admin_ids].reject {|item| item == "0"}
+      note ||= "admin"
+    end
+
+#    unless (params[:own_ok] == "1") && current_user.isOwner?(group)
+#      new_data.delete :owner_id
+#    else
+#      user = User.find new_data[:owner_id]
+#      group.admin_ids.push(user.id).uniq!
+#      note = "owner"
+#    end
+#    group.attributes = new_data
     group.save
     note ||= "success"
     flash[:notice] = I18n.t "group.edit.#{note}"

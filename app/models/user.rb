@@ -23,11 +23,11 @@ class User
   end
 
   def isOwner? group
-    self.id == group.owner.id
+    self == group.owner
   end
 
   def isAdmin? group
-    group.admin_ids.include? self.id
+    self.isOwner?(group) || group.admin_ids.include?(self.id)
   end
 
   def isMember? group
