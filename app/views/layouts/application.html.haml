@@ -2,8 +2,7 @@
 %html
   %head
     %title ExpenseManager
-    = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
+    = render "/layouts/header"
     = csrf_meta_tags
   %body
     = greeting current_user
