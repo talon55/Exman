@@ -1,0 +1,10 @@
+%header
+  %nav
+    %h4= greeting current_user
+    %ul.hmenu
+      = render 'devise/menu/registration_items'
+      = render 'devise/menu/login_items'
+    %ul.hmenu
+      %li= link_to "Home", root_path
+      %li= link_to "Groups", groups_path
+

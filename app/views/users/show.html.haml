@@ -1,7 +1,21 @@
-%h1 #{getFullName(@user)}'s Profile
+%h1 #{@user.getFullName}'s Profile
 
-- if @user.id == current_user._id
+- if @user.id == current_user.id
   %div This is you!
-  - if getFullName(@user) == "Jenny Jean"
+  - if @user.getFullName == "Jenny Jean"
     %p= "I love you! -Eric"
+
+%h3 #{@user.first_name.capitalize} is a member of these groups:
+
+-num = 0
+- @user.groups.each do |group|
+  %p
+    #{num += 1}.
+    = link_to group.name, group
+    - if @user.isOwner? group
+      (Owner)
+    - elsif @user.isAdmin? group
+      (Admin)
+
+%p= link_to "Create a new Group!", new_group_path
 

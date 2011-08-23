@@ -1,0 +1,11 @@
+%div
+  - unless @group.admins.empty?
+    The group administrators are:
+    - num = 0
+    - @group.admins.each do |admin|
+      %p
+        #{num += 1}.
+        = userLink admin
+  -else
+    This group has no administrators.
+

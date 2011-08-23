@@ -1,0 +1,10 @@
+%h2 New Group
+
+= form_for(@group, as: :group, url: {action: "create"}) do |f|
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+
+  %p= f.submit "New Group"
+

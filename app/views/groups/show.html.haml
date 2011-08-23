@@ -1,0 +1,18 @@
+%h1 #{@group.name} Main Page
+
+%h4 This group's owner is #{userLink(@group.owner)}
+
+= render "admins"
+
+%br/
+
+%div
+  The group members are:
+  - num = 0
+  - @group.users.each do |user|
+    %p
+      #{num += 1}.
+      = userLink user
+
+= render "user_controls"
+

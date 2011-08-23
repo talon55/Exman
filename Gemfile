@@ -15,6 +15,7 @@ end
 
 group :development do
   gem "rspec-rails"
+    gem "wirble"
 end
 
 group :test do
@@ -33,6 +34,7 @@ gem "mongoid", "~> 2.1.4"
 gem "bson_ext", "~> 1.3.1"
 gem "devise", "~> 1.4.2"
 gem 'haml-rails', '>= 0.3.4'
+gem "formtastic", "~> 1.2.4"
 
 # Use unicorn as the web server
 # gem 'unicorn'

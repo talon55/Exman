@@ -1,0 +1,9 @@
+- if !current_user.isMember? @group
+  = link_to "Join this Group!", group_path(join: true), method: :put
+-else
+  = link_to "Leave this Group", group_path(leave: true), :confirm => "Are you sure?", method: :put
+
+%br
+- if (current_user.isAdmin?(@group) || current_user.isOwner?(@group))
+  =link_to "Edit this Group", edit_group_path
+
