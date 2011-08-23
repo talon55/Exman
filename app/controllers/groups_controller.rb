@@ -16,21 +16,29 @@ class GroupsController < ApplicationController
 
   def create
     user = current_user
-    group = user.groups.create!(params[:group].merge({owner_id: user.id}))
+    group = user.groups.create!(params[:group])
+    group.owner = user.id
+    group.admin_ids = []
+    group.save
     redirect_to group
   end
 
   def edit
     @group = Group.find(params[:id])
 
-    if (current_user.isOwner?(@group) || current_user.isAdmin?(@group))
+    if  current_user.isAdmin? @group
       @ownerSelect = [[@group.owner.getFullName, @group.owner.id]]
       @group.users.each do |user|
          @ownerSelect.push ([user.getFullName, user.id])
       end
       @ownerSelect.uniq!
 
-      @adminSelect = (@group.users - [@group.owner]).reverse!#.sort! {|a,b| }
+      @userSelect = {}
+      (@group.users - [@group.owner]).each do |user|
+        @userSelect[user.getFullName] = user.id
+      end
+      logger.debug @userSelect
+
     else
       flash[:alert] = I18n.t "group.failure.edit"
       redirect_to @group
@@ -83,8 +91,18 @@ class GroupsController < ApplicationController
     end
 
     if current_user.isOwner?(group) && params[:adm_ok] == "1"
-      group.admins = new_data[:admin_ids].reject {|item| item == "0"}
+      group.admins = new_data[:admin_ids]
       note ||= "admin"
+    end
+
+    logger.debug params[:usr_ok]
+
+    if current_user.isAdmin?(group) && params[:usr_ok] == "1"
+      user = ""
+      user = User.find(new_data[:user_ids]) if BSON::ObjectId.legal? new_data[:user_ids]
+      logger.debug user
+      success = group.remove_user user unless user.blank?
+      note ||= "kicked" if success
     end
 
 #    unless (params[:own_ok] == "1") && current_user.isOwner?(group)

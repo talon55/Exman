@@ -27,7 +27,7 @@ class User
   end
 
   def isAdmin? group
-    self.isOwner?(group) || group.admin_ids.include?(self.id)
+    self == group.owner || group.admin_ids.include?(self.id)
   end
 
   def isMember? group

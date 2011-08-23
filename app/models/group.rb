@@ -25,24 +25,31 @@ class Group
     if continue
       user.remove_group self, false
     end
+    true
   end
 
   def owner
-    User.find(self[:owner_id])
+    User.find(self.owner_id)
   end
 
   def owner= user
     case user
     when User
       self.owner_id = user.id
-    when String, BSON::ObjectId
+    when BSON::ObjectId
       self.owner_id = User.find(user).id
+    when String
+      self.owner_id = User.find(user).id if BSON::ObjectId.legal? user
     end
-    #self.save
+    self.save
   end
 
   def admins
-    User.find(self[:admin_ids])
+    unless self.admin_ids.empty?
+      User.find(self.admin_ids)
+    else
+      []
+    end
   end
 
   # This method replaces the existing admin_ids Array. To add an Admin without

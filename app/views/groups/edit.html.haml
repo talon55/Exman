@@ -2,7 +2,8 @@
 
 = semantic_form_for(@group, as: :group, url: {action: "update"}) do |f|
   = render "form", group: @group, f: f
-  %p= f.buttons
+  = f.buttons do
+    %p= f.commit_button label: "Update"
 
 -if current_user.isOwner? @group
   %p Unhappy? #{link_to "Delete this Group", group_path, :confirm => "Are you sure?", :method => :delete}.

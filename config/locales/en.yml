@@ -14,4 +14,5 @@ en:
       owner: 'Group owner changed!'
       success: 'Group successfully updated!'
       admin: 'Group Admins changed!'
+      kicked: 'User Removed'
 

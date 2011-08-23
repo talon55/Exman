@@ -1,3 +1,10 @@
+
+@mixin round($radius: 5px) {
+  -moz-border-radius:    $radius;
+  -webkit-border-radius: $radius;
+  border-radius:         $radius;
+}
+
 ul{
   .hmenu {
     list-style: none;
@@ -8,6 +15,11 @@ ul{
     display: inline;
   }
 }
+
+.round {
+  @include round;
+}
+
 #flash_notice, #flash_alert {
   padding: 5px 8px;
   margin: 10px 0;
@@ -26,11 +38,21 @@ ul{
 }
 
 body {
-  background: #cff;
+  background: #cfc;
 }
 
 header {
   padding-top: 20px;
+  height: 75px;
+
+  nav {
+  background-color: white;
+  padding: 0 0.7em;
+  white-space: nowrap;
+  @include round;
+  text-align: center;
+  float: right;
+  }
 }
 
 header img {
@@ -63,5 +85,43 @@ a:hover {
 
 a:visited {
   color: #069;
+}
+
+/* Navigation */
+
+nav h4 {
+  margin: .5em;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0.2em 0;
+}
+
+nav ul li a {
+  padding: 0 5px;
+  font-weight: bold;
+}
+
+nav ul li a:visited {
+  color: #09c;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+span.confirm {
+  margin:0.5em 0 0 25%;
+}
+
+#admin_edit {
+  margin-bottom: 1em;
 }
 

@@ -1,0 +1,20 @@
+= f.inputs do
+  - if current_user.isOwner? group
+    =f.input :name
+    = f.input(:owner_id, as: :select, collection: @ownerSelect, include_blank: false)
+    %span.confirm
+      = check_box_tag :own_ok
+      = label_tag :own_ok, "Confirm change of owner."
+
+    #admin_edit
+      %h3 Edit Administrator Roles
+      = f.input(:admin_ids, as: :check_boxes, collection: @userSelect, label: "Admins", hidden_fields: false)
+      %span.confirm
+        = check_box_tag :adm_ok
+        = label_tag :adm_ok, "Confirm change of admins."
+
+  = f.input(:user_ids, as: :select, collection: @userSelect, label: "Remove User", selected: "")
+  %span.confirm
+    = check_box_tag :usr_ok
+    = label_tag :usr_ok, "Confirm removal of user."
+

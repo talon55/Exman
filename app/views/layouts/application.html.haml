@@ -2,18 +2,14 @@
 %html
   %head
     %title ExpenseManager
-    = render "/layouts/header"
+    = render "/layouts/stylesheets"
     = csrf_meta_tags
   %body
-    = greeting current_user
-    %ul.hmenu
-      = render 'devise/menu/registration_items'
-      = render 'devise/menu/login_items'
-    %ul.hmenu
-      = link_to "Home", root_path
-      = link_to "Groups", groups_path
+    .container
+      = render  "/layouts/header"
 
-    - flash.each do |name, msg|
-      = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
-    = yield
+      %section.round
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+        = yield
 
