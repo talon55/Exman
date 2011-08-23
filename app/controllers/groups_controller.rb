@@ -37,7 +37,6 @@ class GroupsController < ApplicationController
       (@group.users - [@group.owner]).each do |user|
         @userSelect[user.getFullName] = user.id
       end
-      logger.debug @userSelect
 
     else
       flash[:alert] = I18n.t "group.failure.edit"
@@ -91,18 +90,20 @@ class GroupsController < ApplicationController
     end
 
     if current_user.isOwner?(group) && params[:adm_ok] == "1"
-      group.admins = new_data[:admin_ids]
+      group.admins = new_data[:admins]
       note ||= "admin"
     end
-
-    logger.debug params[:usr_ok]
 
     if current_user.isAdmin?(group) && params[:usr_ok] == "1"
       user = ""
       user = User.find(new_data[:user_ids]) if BSON::ObjectId.legal? new_data[:user_ids]
-      logger.debug user
-      success = group.remove_user user unless user.blank?
-      note ||= "kicked" if success
+      logger.debug user.inspect
+      unless user.in? group.admins
+        success = group.remove_user user
+        note ||= "kicked" if success
+      else
+        flash[:alert] = I18n.t "group.failure.kick_admin"
+      end
     end
 
 #    unless (params[:own_ok] == "1") && current_user.isOwner?(group)
@@ -114,8 +115,8 @@ class GroupsController < ApplicationController
 #    end
 #    group.attributes = new_data
     group.save
-    note ||= "success"
-    flash[:notice] = I18n.t "group.edit.#{note}"
+    note ||= "success" if flash[:alert].nil?
+    flash[:notice] = I18n.t "group.edit.#{note}" unless note.blank?
   end
 
 end

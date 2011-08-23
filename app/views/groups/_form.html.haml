@@ -8,12 +8,15 @@
 
     #admin_edit
       %h3 Edit Administrator Roles
-      = f.input(:admin_ids, as: :check_boxes, collection: @userSelect, label: "Admins", hidden_fields: false)
-      %span.confirm
-        = check_box_tag :adm_ok
-        = label_tag :adm_ok, "Confirm change of admins."
+      - unless @userSelect.empty?
+        = f.input(:admins, as: :check_boxes, collection: @userSelect, label: "Admins", hidden_fields: false)
+        %span.confirm
+          = check_box_tag :adm_ok
+          = label_tag :adm_ok, "Confirm change of admins."
+      - else
+        = I18n.t "group.failure.no_users"
 
-  = f.input(:user_ids, as: :select, collection: @userSelect, label: "Remove User", selected: "")
+  = f.input(:user_ids, as: :select, collection: @userSelect, label: "Remove User", selected: "", disabled: [current_user.id])
   %span.confirm
     = check_box_tag :usr_ok
     = label_tag :usr_ok, "Confirm removal of user."
