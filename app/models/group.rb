@@ -105,5 +105,6 @@ class Group
   end
 
   has_and_belongs_to_many :users
+  embeds_many :contributions
 end
 
