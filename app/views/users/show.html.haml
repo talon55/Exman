@@ -2,8 +2,7 @@
 
 - if @user.id == current_user.id
   %div This is you!
-  - if @user.getFullName == "Jenny Jean"
-    %p= "I love you! -Eric"
+
 
 %h3 #{@user.first_name.capitalize} is a member of these groups:
 
@@ -18,4 +17,3 @@
       (Admin)
 
 %p= link_to "Create a new Group!", new_group_path
-

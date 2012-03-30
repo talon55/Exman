@@ -3,8 +3,9 @@ class Group
   field :name
   field :owner_id, type: BSON::ObjectId
   field :admin_ids, type: Array
+  field :contributor_ids, type: Array
   validates_presence_of :name
-  #validates_uniqueness_of :name, case_sensitive: false
+  validates_uniqueness_of :name, case_sensitive: false
   attr_accessible :name
 
   after_destroy do
